@@ -1,0 +1,14 @@
+구분,메서드 이름 (매개변수),기능 요약,매개변수 설명,사용 예시
+통신관련 함수,port_open(portname:str),포트 열기,portname: ,port_open('COM3')
+,"set_pin_mode(pin:int, mode:Modes)",핀모드 설정,"pin : 
+mode:","set_pin_mode(11,RobokitRS.Modes.INPUT)"
+모터 제어 함수,"motor_write(motorid:int, direction:int=0, speed:int=15)",DC 모터 회전 제어,"motorid: 
+direction: 
+speed: ",
+,"motor_stop(self, motorid:int)",DC 모터 정지,,
+RGB LED 제어 함수,"set_rgb_led_color(pin: int, red: int, green: int, blue: int)",RGB LED 색상 설정,"pin:
+red, green, blue: ",
+,set_rgb_led_on(pin: int),RGB LED 켜기,pin:,
+,set_rgb_led_off(pin: int),RGB LED 끄기,pin:,
+,"set_rgb_led_brightness(pin: int, brightness: int)",밝기 설정,"pin: 
+brightness: ",
