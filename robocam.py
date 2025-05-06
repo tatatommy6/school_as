@@ -177,6 +177,44 @@ class RoboCam():
 
         print("camera event module ready")
 
+
+    def StartWebStream(self, width:int = 512, height:int = 512):
+        if self.__cameraStreamInitFlag or self.__webcamStreamInitFlag:
+            print("Camera stream is aready running")
+            return
+
+        if self.__webcamStreamInitFlag or self.__cameraStreamInitFlag:
+            print("Webcam stream is aready running")
+            return
+        while True:
+            try:
+                self.__webcam = cv2.VideoCapture(2) #(0)
+                if self.__webcam.isOpened() == False:
+                    time.sleep(0.5)
+                    # print("Unable to read camera feed")
+                    continue
+                else:
+                    break
+            except:
+                time.sleep(0.5)
+                continue
+        self.__camWidth = width
+        self.__camHeight = height
+        self.__webcamStreamInitFlag = True
+        print("webcam stream ready")
+
+        dataSenderTH = threading.Thread(target=self.__dataSender)
+        dataSenderTH.daemon = True
+        dataSenderTH.start()
+        time.sleep(0.1)
+
+        self.__webcamStreamFlag = True
+        th = threading.Thread(target=self.__webcamStreamTh) 
+        th.daemon = True
+        th.start()
+        print("camera event module ready")
+
+        
     def CameraStreamInit(self, width:int = 512, height:int = 512):
         if self.__cameraStreamInitFlag is True:
             print("Camera stream is aready initialized.")
@@ -187,7 +225,6 @@ class RoboCam():
             return
 
         url = 'http://192.168.4.1:81/stream'
-           
         while True:
             try:
                 self.__stream = urllib.request.urlopen(url)
